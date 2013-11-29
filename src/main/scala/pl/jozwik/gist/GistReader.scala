@@ -23,8 +23,7 @@ object GistReader {
   }
 
 
-
-  def readFileFromGist(url:String,number:Int):Either[String,Any] = {
+  def readFileFromGist(number:Int,url:String = DEFAULT_URL):Either[String,Any] = {
     val jsonResponse = Try(httpRequest(url+number))
     jsonResponse match {
       case Success(body) => extractJson(body)
@@ -43,8 +42,8 @@ object GistReader {
   }
 
   def main(args:Array[String]) {
-    val scala22 = readFileFromGist(DEFAULT_URL,7680909)
-    val scalaIsSorted = readFileFromGist(DEFAULT_URL,7681231)
+    val scala22 = readFileFromGist(7680909)
+    val scalaIsSorted = readFileFromGist(7681231)
     logger.debug(s"$scala22")
     logger.debug(s"$scalaIsSorted")
   }
