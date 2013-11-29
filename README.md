@@ -1,4 +1,4 @@
 scala-gist-reader
 =================
 
-Read the files from gist by scala
+Read the files from gist by scala.

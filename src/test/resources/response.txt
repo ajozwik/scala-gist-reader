@@ -1,0 +1,60 @@
+{
+  "url": "https://api.github.com/gists/7680909",
+  "forks_url": "https://api.github.com/gists/7680909/forks",
+  "commits_url": "https://api.github.com/gists/7680909/commits",
+  "id": "7680909",
+  "git_pull_url": "https://gist.github.com/7680909.git",
+  "git_push_url": "https://gist.github.com/7680909.git",
+  "html_url": "https://gist.github.com/7680909",
+  "files": {
+    "P22.scala": {
+      "filename": "P22.scala",
+      "type": "text/plain",
+      "language": "Scala",
+      "raw_url": "https://gist.github.com/ajozwik/7680909/raw/7d4444a56d29dce17950c9d6026c699791056d23/P22.scala",
+      "size": 148,
+      "content": "  def range(from: Int, to: Int): Seq[Int] = {\n    def fromN(n: Int): Stream[Int] = n #:: fromN(n + 1)\n    fromN(from).take(to - from + 1).toList\n  }"
+    }
+  },
+  "public": true,
+  "created_at": "2013-11-27T18:39:18Z",
+  "updated_at": "2013-11-27T18:39:19Z",
+  "description": "",
+  "comments": 0,
+  "user": {
+    "login": "ajozwik",
+    "id": 909625,
+    "avatar_url": "https://2.gravatar.com/avatar/bb1c10e76b3b540abcc2bf4889a0e52f?d=https%3A%2F%2Fidenticons.github.com%2F35b9ead6878c522321d3a7ca39ab30c9.png&r=x",
+    "gravatar_id": "bb1c10e76b3b540abcc2bf4889a0e52f",
+    "url": "https://api.github.com/users/ajozwik",
+    "html_url": "https://github.com/ajozwik",
+    "followers_url": "https://api.github.com/users/ajozwik/followers",
+    "following_url": "https://api.github.com/users/ajozwik/following{/other_user}",
+    "gists_url": "https://api.github.com/users/ajozwik/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/ajozwik/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/ajozwik/subscriptions",
+    "organizations_url": "https://api.github.com/users/ajozwik/orgs",
+    "repos_url": "https://api.github.com/users/ajozwik/repos",
+    "events_url": "https://api.github.com/users/ajozwik/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/ajozwik/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "comments_url": "https://api.github.com/gists/7680909/comments",
+  "forks": [
+
+  ],
+  "history": [
+    {
+      "user": null,
+      "version": "b21a233ee01c6fc113a8c954d90b7cc2f47ea564",
+      "committed_at": "2013-11-27T18:39:18Z",
+      "change_status": {
+        "total": 4,
+        "additions": 4,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/7680909/b21a233ee01c6fc113a8c954d90b7cc2f47ea564"
+    }
+  ]
+}
