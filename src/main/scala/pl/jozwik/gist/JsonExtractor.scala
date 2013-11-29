@@ -1,7 +1,6 @@
 package pl.jozwik.gist
 
 import scala.util.parsing.json.JSON
-import org.slf4j.LoggerFactory
 import scala.annotation.tailrec
 
 object JsonExtractor {
