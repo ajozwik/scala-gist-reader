@@ -19,19 +19,22 @@ object JsonExtractor {
   @tailrec
   private def extract(x: Any, tags: List[String]): Option[Any] = (x, tags) match {
     case (_, Nil) => Some(x)
-    case (map: Map[String, Any], h :: t) => {
-      val v = if (h == null) {
-        map.values.headOption match {
-          case Some(x) => x
-          case none => none
-        }
-      } else {
-        map.getOrElse(h, None)
-      }
+    case (map: Map[String, Any], key :: t) => {
+      val v: Any = extractNextElement(map,key)
       extract(v, t)
     }
     case (x, _) => None
   }
 
 
+  private def extractNextElement(map: Map[String, Any],key: String): Any = {
+    if (key == null) {
+      map.values.headOption match {
+        case Some(x) => x
+        case none => none
+      }
+    } else {
+      map.getOrElse(key, None)
+    }
+  }
 }
