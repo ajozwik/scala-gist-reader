@@ -13,14 +13,13 @@ class GistReaderTest extends mutable.Specification {
 
 
   "Gist reader " should {
-    "extract file from gist " in new context {
+    "extract files from gist " in new context {
       val HTTP = "http://localhost:" + port + "/"
-      val res = GistReader.readFileFromGist(gistId,HTTP)
-      val b = res match {
+      val res = GistReader.readFilesFromGist(Seq(gistId), HTTP)
+      res.forall(_ match {
         case Right(r) => true
         case Left(l) => false
-      }
-      b === true
+      })
     }
   }
 

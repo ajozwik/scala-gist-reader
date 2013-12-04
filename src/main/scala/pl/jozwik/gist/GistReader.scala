@@ -23,6 +23,10 @@ object GistReader {
   }
 
 
+  def readFilesFromGist(numbers:Seq[Int],url:String = DEFAULT_URL):Seq[Either[String,Any]] = {
+    numbers.map(n => readFileFromGist(n,url))
+  }
+
   def readFileFromGist(number:Int,url:String = DEFAULT_URL):Either[String,Any] = {
     val jsonResponse = Try(httpRequest(url+number))
     jsonResponse match {
@@ -42,9 +46,25 @@ object GistReader {
   }
 
   def main(args:Array[String]) {
-    val scala22 = readFileFromGist(7680909)
-    val scalaIsSorted = readFileFromGist(7681231)
-    logger.debug(s"$scala22")
-    logger.debug(s"$scalaIsSorted")
+    val files = readFilesFromGist(Seq(7680909,7681231))
+
+    val begin =
+      s"""
+        |class ForTest{
+        |
+     """.stripMargin
+
+    val end =
+      s"""
+        |}
+     """.stripMargin
+    val builder = new StringBuilder(begin)
+    files.foreach(either => either match{
+      case Right(body) => builder.append(body).append('\n').append('\n')
+      case Left(e) =>
+    })
+    builder.append(end)
+
+    logger.debug(s"$builder")
   }
 }
