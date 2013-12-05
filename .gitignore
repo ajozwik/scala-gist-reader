@@ -1,7 +1,7 @@
 *.log
 *.iml
 .idea*
-
+*~
 # sbt specific
 dist/*
 target/
