@@ -11,6 +11,8 @@ import play.api.data.validation.Constraints
 
 object Application extends Controller {
 
+  val delimiter = ","
+
   val form: Form[TestDetails] = Form(
     mapping(
       packageName -> nonEmptyText,
@@ -18,7 +20,7 @@ object Application extends Controller {
       signature -> nonEmptyText,
       testName -> nonEmptyText,
       numbers -> Forms.of[String].verifying(Constraints.pattern(
-        """((\d+),)*(\d+)""".r,
+        s"""((\\d+)${delimiter})*(\\d+)""".r,
         "constraint.numbers",
         "error.numbers"))
     )(TestDetails.apply)(TestDetails.unapply)
@@ -37,7 +39,7 @@ object Application extends Controller {
         // binding failure, you retrieve the form containing errors:
         BadRequest(views.html.index(formWithErrors, Nil))
       }, s => {
-        val numbers = s.numbers.trim.split(",").map(el => el.trim.toInt)
+        val numbers = s.numbers.trim.split(delimiter).map(el => el.trim.toInt)
         val result = ScalaniaTest.uploadSolutionsAndRunTests(s.packageName.trim,
           s.objectName.trim,
           s.signature.trim,
