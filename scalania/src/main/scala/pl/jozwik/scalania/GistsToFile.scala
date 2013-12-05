@@ -57,7 +57,11 @@ object GistsToFile {
   def extractMethodName(body: String): String = {
     val defIndex = body.indexOf("def")
     val seq = Seq('(', '[', '=', ':')
-    val index = seq.map(e => body.indexOf(e)).filter(p => p != -1).min
-    body.substring(defIndex + "def".length, index).trim
+    val intSeq = seq.map(e => body.indexOf(e)).filter(p => p != -1)
+    intSeq match{
+      case Nil => ""
+      case l => body.substring(defIndex + "def".length, l.min).trim
+    }
+
   }
 }
