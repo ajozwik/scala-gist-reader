@@ -1,10 +1,6 @@
 package pl.jozwik.scalania
 
 import pl.jozwik.gist.GistReader._
-import org.apache.commons.io.FileUtils
-import java.io.File
-import scala.sys.process.Process
-import java.nio.file.FileSystems
 
 object GistsToFile {
 
@@ -35,13 +31,16 @@ object GistsToFile {
     val content = new StringBuilder()
     val solutions = new StringBuilder()
     contentOfFiles.foreach(_ match {
-      case Right(body) => {
-        content.append(body).append('\n').append('\n')
+      case Right((body, number)) => {
         if (!solutions.isEmpty) {
           solutions.append(",").append('\n')
         }
-
-        solutions.append(extractMethodName(body.toString))
+        val b = body.toString
+        val methodName = extractMethodName(b)
+        val newMethodName = methodName + "_" + number
+        val newBody = b.replaceFirst(methodName, newMethodName)
+        solutions.append(newMethodName)
+        content.append(newBody).append('\n').append('\n')
       }
       case Left(e) =>
     })
@@ -50,39 +49,15 @@ object GistsToFile {
 
   }
 
-  def cloneRepository(scalaniaDir:File) = {
-    if (!scalaniaDir.exists()) {
-      FileUtils.deleteDirectory(scalaniaDir)
-      scalaniaDir.mkdirs()
-      val pb = Process(Seq("git", "clone", "https://github.com/jaceklaskowski/scalania.git"), scalaniaDir.getParentFile)
-      pb.lines.foreach(line => println(line))
-    }
-  }
-
-
-  def storeFileWithTests(scalaniaDir:File,packageName:String,objectName:String,content:String) {
-    val srcPath = FileSystems.getDefault().getPath(scalaniaDir.getAbsolutePath,"exercises","src","main","scala")
-    val splitted = packageName.split("\\.")
-    val packageDir = splitted.foldLeft(srcPath.toFile)((f,str) => new File(f,str))
-
-
-    val location = new File(packageDir,objectName+".scala")
-    Some(new java.io.PrintWriter(location)).foreach{f => try{f.write(content)}finally{f.close}}
-  }
 
   private def toScalaObject(packageName: String, objectName: String, signatureOfMethod: String, solutions: StringBuilder, content: StringBuilder): String = {
     beginFile(packageName, objectName, signatureOfMethod) + solutions + closeSolutions + content + endFile
   }
 
-  private def extractMethodName(body: String) = {
+  def extractMethodName(body: String): String = {
     val defIndex = body.indexOf("def")
-    val openParenthesis = body.indexOf('(')
-    val openParenthesis2 = body.indexOf('[')
-    val index = if (openParenthesis2 == -1) {
-      openParenthesis
-    } else {
-      openParenthesis2 min openParenthesis
-    }
+    val seq = Seq('(', '[', '=', ':')
+    val index = seq.map(e => body.indexOf(e)).filter(p => p != -1).min
     body.substring(defIndex + "def".length, index).trim
   }
 }

@@ -23,14 +23,17 @@ object GistReader {
   }
 
 
-  def readFilesFromGist(numbers:Seq[Int],url:String = DEFAULT_URL):Seq[Either[String,Any]] = {
+  def readFilesFromGist(numbers:Seq[Int],url:String = DEFAULT_URL):Seq[Either[String,(Any,Int)]] = {
     numbers.map(n => readFileFromGist(n,url))
   }
 
-  def readFileFromGist(number:Int,url:String = DEFAULT_URL):Either[String,Any] = {
+  def readFileFromGist(number:Int,url:String = DEFAULT_URL):Either[String,(Any,Int)] = {
     val jsonResponse = Try(httpRequest(url+number))
     jsonResponse match {
-      case Success(body) => extractJson(body)
+      case Success(body) => extractJson(body) match {
+        case Left(m) => Left(m)
+        case Right(any) => Right((any,number))
+      }
       case Failure(e) => Left(e.getMessage)
     }
 

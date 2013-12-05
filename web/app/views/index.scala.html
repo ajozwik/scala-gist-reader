@@ -1,0 +1,20 @@
+@(form:Form[TestDetails],result:List[String])
+
+@main("Welcome to Play") {
+
+    @helper.form(action = routes.Application.checkSolution) {
+        @helper.inputText(form(TestDetails.packageName))
+        @helper.inputText(form(TestDetails.objectName))
+
+        @helper.inputText(form(TestDetails.signature))
+        @helper.inputText(form(TestDetails.testName))
+
+        @helper.inputText(form(TestDetails.numbers))
+        <button type="submit" value="submit">Submit</button>
+    }
+
+    @for(el <- result){
+        @el <br>
+    }
+
+}

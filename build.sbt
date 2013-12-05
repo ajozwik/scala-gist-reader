@@ -1,3 +1,5 @@
+import play.Project._
+
 organization := "pl.jozwik"
 
 name := "scala-gist-reader"
@@ -11,6 +13,10 @@ lazy val gistReader = ProjectName("gistReader").settings(
 
 lazy val scalania = {
   ProjectName("scalania").dependsOn(gistReader)
+}
+
+lazy val web = {
+  ProjectName("web").settings(playScalaSettings: _*).dependsOn(scalania)
 }
 
 
