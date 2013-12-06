@@ -11,14 +11,14 @@ lazy val gistReader = ProjectName("gistReader").settings(
     "commons-io" % "commons-io" % "2.4")
 )
 
-lazy val scalania = {
-  ProjectName("scalania").dependsOn(gistReader)
+lazy val testRunner = {
+  ProjectName("testRunner").dependsOn(gistReader)
 }
 
 lazy val web = {
   ProjectName("web").settings(playScalaSettings: _*).settings(
     libraryDependencies += "org.fusesource.jansi" % "jansi" % "1.11"
-  ).dependsOn(scalania)
+  ).dependsOn(testRunner)
 }
 
 
