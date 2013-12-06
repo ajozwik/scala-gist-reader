@@ -1,0 +1,6 @@
+packageName=Package name (pl.japila.scalania.s99)
+objectName=Object name (S99_P21)
+signature=Method singnature, (Seq[(Any, Int, Seq[Any]) => Seq[Any]])
+testName=Test name (P21Spec)
+numbers=Gist numbers comma separated (7680647, 7680700, 9384)
+error.numbers= Wrong format
