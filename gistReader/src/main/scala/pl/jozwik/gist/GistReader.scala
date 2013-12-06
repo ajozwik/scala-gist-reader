@@ -12,7 +12,7 @@ object GistReader {
   val DEFAULT_URL = "https://api.github.com/gists/"
   val httpclient = HttpClients.createDefault()
 
-  private def httpRequest(url:String) = {
+  private def httpRequest(url:String):String = {
     val httpget = new HttpGet(url)
     val response = httpclient.execute(httpget)
     try {

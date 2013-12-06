@@ -1,20 +1,31 @@
-@(form:Form[TestDetails],result:List[String])
+@(form: Form[TestDetails], content: String, result: Seq[String])
+
+
+    @inputText(field: play.api.data.Field) = {
+    @helper.inputText(field, 'size -> 70)
+    }
 
 @main("Welcome to Play") {
 
     @helper.form(action = routes.Application.checkSolution) {
-        @helper.inputText(form(TestDetails.packageName))
-        @helper.inputText(form(TestDetails.objectName))
+        @inputText(form(TestDetails.packageName))
+        @inputText(form(TestDetails.objectName))
 
-        @helper.inputText(form(TestDetails.signature))
-        @helper.inputText(form(TestDetails.testName))
+        @inputText(form(TestDetails.signature))
+        @inputText(form(TestDetails.testName))
 
-        @helper.inputText(form(TestDetails.numbers))
+        @inputText(form(TestDetails.numbers))
         <button type="submit" value="submit">Submit</button>
     }
-
-    @for(el <- result){
-        @el <br>
+    <br>
+    <pre>
+        <code>
+        @content
+        </code>
+    </pre>
+    <br>
+    @for(el <- result) {
+        @Html(el) <br>
     }
 
 }

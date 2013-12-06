@@ -16,7 +16,9 @@ lazy val scalania = {
 }
 
 lazy val web = {
-  ProjectName("web").settings(playScalaSettings: _*).dependsOn(scalania)
+  ProjectName("web").settings(playScalaSettings: _*).settings(
+    libraryDependencies += "org.fusesource.jansi" % "jansi" % "1.11"
+  ).dependsOn(scalania)
 }
 
 

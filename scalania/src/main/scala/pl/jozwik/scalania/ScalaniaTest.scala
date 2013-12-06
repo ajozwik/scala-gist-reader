@@ -4,7 +4,9 @@ import java.io.File
 import java.nio.file.FileSystems
 import org.apache.commons.io.FileUtils
 import pl.jozwik.scalania.GistsToFile._
-import scala.sys.process.Process
+import scala.sys.process.{ProcessLogger, Process}
+import pl.jozwik.gist.GistReader
+import scala.collection.mutable.ArrayBuffer
 
 object ScalaniaTest {
 
@@ -14,12 +16,12 @@ object ScalaniaTest {
     val signature = args(2)
     val testName = args(3)
 
-    uploadSolutionsAndRunTests(packageName, objectName, signature, testName, 7680647, 7680700)
+    uploadSolutionsAndRunTests(packageName, objectName, signature, testName, Seq(7680647, 7680700))
   }
 
 
-  def uploadSolutionsAndRunTests(packageName: String, objectName: String, signature: String, testName: String, numbers: Int*) = {
-    val objectContent = gistsToFile(packageName, objectName, signature, numbers: _*)
+  def uploadSolutionsAndRunTests(packageName: String, objectName: String, signature: String, testName: String, numbers: Seq[Int], url: String = GistReader.DEFAULT_URL): (Seq[String],String) = {
+    val objectContent = gistsToFile(packageName, objectName, signature, numbers, url)
 
 
     val tmpDir = new File("tmp")
@@ -29,18 +31,25 @@ object ScalaniaTest {
 
     storeFileWithTests(scalaniaDir, packageName, objectName, objectContent)
 
-    runSbt(packageName, testName, scalaniaDir)
+    (runSbt(packageName, testName, scalaniaDir),objectContent)
   }
 
-  private def runSbt(packageName: String, testName: String, scalaniaDir: File) = {
+  private def runSbt(packageName: String, testName: String, scalaniaDir: File):Seq[String] = {
     val sbtPb = Process(Seq("sbt", "testOnly " + packageName + s".$testName", ""), scalaniaDir)
     println(s"$sbtPb")
 
-    sbtPb.lines
+    //    sbtPb.lines.foreach(line => println(line))
+    val builder = new ArrayBuffer[String]()
+    val a: Process = sbtPb.run(ProcessLogger(output => {
+      println(output)
+      builder += output
+    }))
+    a.exitValue()
+    builder.toSeq
   }
 
   private def storeFileWithTests(scalaniaDir: File, packageName: String, objectName: String, content: String) {
-    val srcPath = FileSystems.getDefault().getPath(scalaniaDir.getAbsolutePath, "exercises", "src", "main", "scala")
+    val srcPath = FileSystems.getDefault.getPath(scalaniaDir.getAbsolutePath, "exercises", "src", "main", "scala")
     val splitted = packageName.split("\\.")
     val packageDir = splitted.foldLeft(srcPath.toFile)((f, str) => new File(f, str))
     val location = new File(packageDir, objectName + ".scala")
@@ -48,7 +57,7 @@ object ScalaniaTest {
       f => try {
         f.write(content)
       } finally {
-        f.close
+        f.close()
       }
     }
   }
