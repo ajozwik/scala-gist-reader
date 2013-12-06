@@ -8,6 +8,8 @@
 @main("Welcome to Play") {
 
     @helper.form(action = routes.Application.checkSolution) {
+        @inputText(form(TestDetails.url))
+        @inputText(form(TestDetails.subProject))
         @inputText(form(TestDetails.packageName))
         @inputText(form(TestDetails.objectName))
 

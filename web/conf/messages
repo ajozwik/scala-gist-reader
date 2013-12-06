@@ -4,3 +4,4 @@ signature=Method singnature, (Seq[(Any, Int, Seq[Any]) => Seq[Any]])
 testName=Test name (P21Spec)
 numbers=Gist numbers comma separated (7680647, 7680700, 9384)
 error.numbers= Wrong format
+url=Repository url (https://github.com/jaceklaskowski/scalania.git)
