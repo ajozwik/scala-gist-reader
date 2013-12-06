@@ -10,18 +10,16 @@ Usage:
 * Run: sbt  "project web" "run"
 * Open browser: http://localhost:9000/
 * Fill the fields with values:
-<pre><code>
-Package name (pl.japila.scalania.s99)
 
-Object name (S99_P21)
+        Package name (pl.japila.scalania.s99)
 
-Method singnature, (Seq[(Any, Int, Seq[Any]) => Seq[Any]])
+        Object name (S99_P21)
 
-Test name (P21Spec)
+        Method singnature, (Seq[(Any, Int, Seq[Any]) => Seq[Any]])
 
-Gist numbers comma separated (7680647, 7680700)
+        Test name (P21Spec)
 
-</code></pre>
+        Gist numbers comma separated (7680647, 7680700)
 
 * Submit the form
 
@@ -31,4 +29,6 @@ From requested gists (7680647, 7680700) methods are extracted and placed to "Obj
 As the last task the sbt is run in background in scalania directory with command:
 
 sbt 'testOnly pl.japila.scalania.s99.P21Spec'
+
+Result object and sbt output are displayed on page.
 
