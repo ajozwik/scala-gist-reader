@@ -1,7 +1,10 @@
 scala-gist-reader
 =================
 
-Read file from gist and store in location
+Clone the project from git, read the files from gist and store project location (original file is overridden)
+The repository is cloned to tmp dir.
+
+Next the sbt 'testOnly pl.japila.scalania.s99.P21Spec' command is run (in below example)
 
 The main method (example of usage):
 
