@@ -9,7 +9,7 @@ import pl.jozwik.gist.GistReader
 import scala.collection.mutable.ArrayBuffer
 import java.net.URL
 
-object ScalaniaTest {
+object TestRunner {
 
   def main(args: Array[String]) {
     val packageName = args(0)
@@ -39,7 +39,6 @@ object ScalaniaTest {
     val sbtPb = Process(Seq("sbt", "testOnly " + packageName + s".$testName", ""), scalaniaDir)
     println(s"$sbtPb")
 
-    //    sbtPb.lines.foreach(line => println(line))
     val builder = new ArrayBuffer[String]()
     val a: Process = sbtPb.run(ProcessLogger(output => {
       println(output)

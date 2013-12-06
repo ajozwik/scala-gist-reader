@@ -1,6 +1,6 @@
 package controllers
 
-import pl.jozwik.scalania.ScalaniaTest
+import pl.jozwik.scalania.TestRunner
 import play.api.mvc._
 import play.api.data.{Forms, Form}
 import play.api.data.format.Formats._
@@ -46,7 +46,7 @@ object Application extends Controller {
         BadRequest(views.html.index(formWithErrors, "", Nil))
       }, s => {
         val numbers = s.numbers.trim.split(delimiter).map(el => el.trim.toInt)
-        val (result, content) = ScalaniaTest.uploadSolutionsAndRunTests(new URL(s.url), s.subProject, s.packageName.trim,
+        val (result, content) = TestRunner.uploadSolutionsAndRunTests(new URL(s.url), s.subProject, s.packageName.trim,
           s.objectName.trim,
           s.signature.trim,
           s.testName.trim,
