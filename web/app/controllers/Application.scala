@@ -1,6 +1,6 @@
 package controllers
 
-import pl.jozwik.scalania.TestRunner
+import pl.jozwik.runner.TestRunner
 import play.api.mvc._
 import play.api.data.{Forms, Form}
 import play.api.data.format.Formats._

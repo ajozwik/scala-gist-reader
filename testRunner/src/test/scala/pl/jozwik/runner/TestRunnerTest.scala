@@ -1,4 +1,4 @@
-package pl.jozwik.scalania
+package pl.jozwik.runner
 
 import org.specs2.mutable
 

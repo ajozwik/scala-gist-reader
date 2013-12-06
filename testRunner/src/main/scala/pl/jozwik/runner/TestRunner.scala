@@ -1,9 +1,9 @@
-package pl.jozwik.scalania
+package pl.jozwik.runner
 
 import java.io.File
 import java.nio.file.FileSystems
 import org.apache.commons.io.FileUtils
-import pl.jozwik.scalania.GistsToFile._
+import pl.jozwik.runner.GistsToFile._
 import scala.sys.process.{ProcessLogger, Process}
 import pl.jozwik.gist.GistReader
 import scala.collection.mutable.ArrayBuffer
