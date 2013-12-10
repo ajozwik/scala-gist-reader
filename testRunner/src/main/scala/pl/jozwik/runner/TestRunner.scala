@@ -8,6 +8,7 @@ import scala.sys.process.{ProcessLogger, Process}
 import pl.jozwik.gist.GistReader
 import scala.collection.mutable.ArrayBuffer
 import java.net.URL
+import org.eclipse.jgit.api.Git
 
 object TestRunner {
 
@@ -25,7 +26,7 @@ object TestRunner {
 
   def extractName(url: String): String = {
     val lastSlash = url.lastIndexOf('/')
-    val name = url.substring(lastSlash+1)
+    val name = url.substring(lastSlash + 1)
     if (name.endsWith(gitPostfix)) {
       name.substring(0, name.length - gitPostfix.length)
     } else {
@@ -77,9 +78,7 @@ object TestRunner {
   private def cloneRepository(destDir: File, url: URL) = {
     if (!destDir.exists()) {
       FileUtils.deleteDirectory(destDir)
-      destDir.mkdirs()
-      val pb = Process(Seq("git", "clone", url.toString), destDir.getParentFile)
-      pb.lines.foreach(line => println(line))
+      Git.cloneRepository().setURI(url.toString).setDirectory(destDir).call()
     }
   }
 }
