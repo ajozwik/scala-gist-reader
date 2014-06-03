@@ -26,7 +26,7 @@ object Application extends Controller {
       signature -> nonEmptyText,
       testName -> nonEmptyText,
       numbers -> Forms.of[String].verifying(Constraints.pattern(
-        s"""((\\s*\\d+\\s*)${delimiter})*(\\s*\\d+\\s*){0,1}""".r,
+        s"""((\\s*\\d+\\s*)$delimiter)*(\\s*\\d+\\s*){0,1}""".r,
         "constraint.numbers",
         "error.numbers"))
     )(TestDetails.apply)(TestDetails.unapply)

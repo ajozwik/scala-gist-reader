@@ -1,34 +1,35 @@
-import play.Project._
-
-organization := "pl.jozwik"
+organization in Global:= "pl.jozwik"
 
 name := "scala-gist-reader"
 
 version := "0.1"
 
+scalaVersion in Global := "2.11.1"
+
 lazy val gistReader = ProjectName("gistReader").settings(
-  libraryDependencies ++= Seq("org.apache.httpcomponents" % "httpclient" % "4.3.1",
-    "commons-io" % "commons-io" % "2.4")
+  libraryDependencies ++= Seq("org.apache.httpcomponents" % "httpclient" % "4.3.3",
+    "commons-io" % "commons-io" % "2.4",
+                                "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.1")
 )
 
 lazy val testRunner = {
   ProjectName("testRunner").settings(
-    libraryDependencies += "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r"
+    libraryDependencies += "org.eclipse.jgit" % "org.eclipse.jgit" % "3.3.2.201404171909-r"
   ).dependsOn(gistReader)
 }
 
 lazy val web = {
-  ProjectName("web").settings(playScalaSettings: _*).settings(
-    libraryDependencies += "org.fusesource.jansi" % "jansi" % "1.11"
-  ).dependsOn(testRunner)
+  ProjectName("web").settings(
+    libraryDependencies ++= Seq("org.fusesource.jansi" % "jansi" % "1.11")
+  ).dependsOn(testRunner).enablePlugins(PlayScala).enablePlugins(SbtWeb)
 }
 
 
 
 libraryDependencies in Global ++= Seq(
-  "org.specs2" %% "specs2" % "2.3.4" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.11.1" % "test",
-  "ch.qos.logback" % "logback-classic" % "1.0.13")
+  "org.specs2" %% "specs2" % "2.3.12" % "test",
+  "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
+  "ch.qos.logback" % "logback-classic" % "1.1.2")
 
 
 
